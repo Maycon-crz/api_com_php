@@ -1,0 +1,14 @@
+======Campos
+id = CPF da aplicação, identificador
+titulo = Nome do Jogo
+descricao = Breve descrição do jogo
+videoid = Trailer do jogo
+
+======Validações
+id = número && > 0
+titulo = > 3 && <= 100
+descricao = >= 10 && <= 250
+videoid = != "" && <= 15
+
+
+======RESTFULL

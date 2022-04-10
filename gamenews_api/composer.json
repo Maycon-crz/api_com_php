@@ -1,0 +1,22 @@
+{
+    "name": "cliente/gamenews",
+    "description": "Projeto site de jogos",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cliente\\Gamenews\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maycon Nascimento",
+            "email": "nmaycon304@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+      "psr-4": {
+        "App\\" : "App/"
+      }
+    }
+}
