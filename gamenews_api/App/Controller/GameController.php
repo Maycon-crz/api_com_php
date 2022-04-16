@@ -21,10 +21,10 @@
 			$result = $this->validate($game);
 
 			if($result != ""){
-				echo json_encode(["result" => $result]);
+				return json_encode(["result" => $result]);
 			}
 
-			$this->gameModel->create($game);
+			return json_encode(["result" => $this->gameModel->create($game)]);
 		}
 
 		//PUT - Altera um game
@@ -35,35 +35,44 @@
 			$result = $this->validate($game, true);
 
 			if($result != ""){
-				echo json_encode(["result" => $result]);
+				return json_encode(["result" => $result]);
 			}
 
+			return json_encode(["result" => $this->gameModel->update($game)]);
 		}
 
 		//DELETE - Remove um game
 		function delete($id = 0){
-			return json_encode(["name" => "delete - {$id}"]);
+			$id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+			if($id <= 0){
+				return json_encode(["result" => "invalid id"]);
+			}
+			$result = $this->gameModel->delete($id);
 
+			return json_encode(["result" => $result]);
 		}
 
 		//GET - Retorna um game pelo ID
 		function readById($id = 0){
-			return json_encode(["name" => "crreadById - {$id}"]);
-
+			$id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+			if($id <= 0){
+				return json_encode(["result" => "invalid id"]);
+			}
+			return $this->gameModel->readById($id);
 		}
 
 		//GET - Retorna todos os games
 		function readAll(){
-			return json_encode(["name" => "readAll"]);
+			return $this->gameModel->readAll();
 
 		}
 
 		private function convertType($data){
 			return new Game(
 				null,
-				(isset($data["titulo"]) ? $data["titulo"] : null),
-				(isset($data["descricao"]) ? $data["descricao"] : null),
-				(isset($data["videoid"]) ? $data["videoid"] : null)
+				(isset($data["titulo"]) ? filter_var($data["titulo"], FILTER_SANITIZE_STRING) : null),
+				(isset($data["descricao"]) ? filter_var($data["descricao"], FILTER_SANITIZE_STRING) : null),
+				(isset($data["videoid"]) ? filter_var($data["videoid"], FILTER_SANITIZE_STRING) : null)
 			);
 		}
 
